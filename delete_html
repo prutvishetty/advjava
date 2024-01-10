@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+<form action="server3"  method="post">
+<label for="usn"> enter your usn: </label>
+<input id="usn"  name="usn" type="number"  required><br>
+
+<input type="submit"  value="enter">
+</form>
+
+</body>
+</html>
