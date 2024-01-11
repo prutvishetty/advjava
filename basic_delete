@@ -1,0 +1,27 @@
+package test1;
+import java.sql.*;
+
+public class class123 {
+	public static void main(String args[]) {
+		Connection con=null;
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			con=DriverManager.getConnection("jdbc:mysql://localhost:3306/student","root","");
+			if(!con.isClosed())
+                System.out.println("Successfully connected to MySQL server...");
+			Statement statement = con.createStatement();
+		     String deleteQuery = "DELETE FROM details WHERE rollno=12";
+	            int rowsAffected = statement.executeUpdate(deleteQuery);
+
+	            System.out.println(rowsAffected + " row(s) deleted.");
+	            
+		}catch (Exception e) {
+			System.err.println("exception: "+e.getMessage());
+		}finally {
+			try {
+				if(con!=null)
+					con.close();
+			}catch(SQLException e) {}
+		}	
+	}
+}
