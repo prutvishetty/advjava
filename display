@@ -1,0 +1,109 @@
+import java.sql.*;
+import java.io.*;
+import java.io.IOException;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+/**
+ * Servlet implementation class nisu
+ */
+@WebServlet("/nisu")
+public class nisu extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+       
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public nisu() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		response.setContentType("text/html");
+		PrintWriter out=response.getWriter();
+		Connection con=null;
+		
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			con=DriverManager.getConnection("jdbc:mysql://localhost:3306/student","root","");
+			if (!con.isClosed()) {
+				out.println("Succesfully Connected\n");
+			}
+			String sql="select * from Details";
+			Statement stmt =con.createStatement();
+			ResultSet rs=stmt.executeQuery(sql);
+			//extracting
+			while(rs.next()) {
+				out.println(rs.getString(1)+" "+rs.getString(2)+" "+rs.getInt(3)+" "+rs.getInt(4));
+			}
+			//input
+			String sql1="insert into Details values(?,?,?,?)";
+			PreparedStatement ps=con.prepareStatement(sql1);
+			String Name=request.getParameter("Name");
+			String USN=request.getParameter("USN");
+			String CGPA=request.getParameter("CGPA");
+			String Semester=request.getParameter("Semester");
+			ps.setString(1, Name);
+			ps.setString(2, USN);
+			ps.setInt(3,Integer.parseInt(CGPA));
+			ps.setInt(4,Integer.parseInt(Semester));
+			int r =ps.executeUpdate();
+			if (r>0) {
+				out.println("Succesfully added");
+			}
+			else {
+				out.println("Error in Inserting");
+			}
+			
+			//update
+			PreparedStatement ps1=con.prepareStatement("update Details set CGPA=? where USN=?");
+			String USN1=request.getParameter("USN1");
+			String CGPA1=request.getParameter("CGPA1");
+			ps1.setString(1,CGPA1);
+			ps1.setString(2,USN1);
+			int r1=ps1.executeUpdate();
+			if (r1>0) {
+				out.println("Update Successful");
+			}
+			else {
+				out.println("Error During Update<input type=\"submit\" value=\"Submit\">");
+			}
+			//delete
+			PreparedStatement ps2=con.prepareStatement("delete from Details where USN =?");
+			String USN2=request.getParameter("USN2");
+			ps2.setString(1,USN2);
+			int r2=ps2.executeUpdate();
+			if (r2>0) {
+				out.println("Delete Successful");
+			}
+			else {
+				out.println("Error During Delete");
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		doGet(request, response);
+	}
+
+}
