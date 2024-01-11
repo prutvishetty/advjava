@@ -1,0 +1,31 @@
+package test1;
+import java.sql.*;
+
+public class class123 {
+	public static void main(String args[]) {
+		Connection con=null;
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			con=DriverManager.getConnection("jdbc:mysql://localhost:3306/student","root","");
+			if(!con.isClosed())
+                System.out.println("Successfully connected to MySQL server...");
+		      String insertQuery = "INSERT INTO details (rollno, name,subject,usn) VALUES (?, ?,?,?)";
+	            PreparedStatement preparedStatement = con.prepareStatement(insertQuery);
+	            preparedStatement.setInt(1, 20);
+	            preparedStatement.setString(2, "punya");
+	            preparedStatement.setString(3, "data_sc");
+	            preparedStatement.setString(4, "1ms21cs134");
+	            
+
+	            int rowsAffected = preparedStatement.executeUpdate();
+	            System.out.println(rowsAffected + " row(s) affected.");
+		}catch (Exception e) {
+			System.err.println("exception: "+e.getMessage());
+		}finally {
+			try {
+				if(con!=null)
+					con.close();
+			}catch(SQLException e) {}
+		}	
+	}
+}
