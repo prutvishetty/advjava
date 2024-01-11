@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Details</title>
+</head>
+<body>
+<h1>Give Values To Insert and update</h1>
+<form action="nisu" method="post">
+Name
+<input type="text" name="Name" required>
+Usn
+<input type="text" name="USN" required>
+CGPA
+<input type="text" name="CGPA" required>
+Semester
+<input type="text" name="Semester" required>
+
+Usn update
+<input type="text" name="USN1" required>
+CGPA update
+<input type="text" name="CGPA1" required>
+
+Usn delete
+<input type="text" name="USN2" required>
+<input type="submit" value="Submit">
+</form>
+
+
+</body>
+</html>
